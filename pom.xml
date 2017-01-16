@@ -13,9 +13,10 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <service.vendor>ilyamur</service.vendor>
-        <bundle.name>com.ilyamur.osgi.topaz</bundle.name>
-        <bundle.activator>com.ilyamur.osgi.topaz.Activator</bundle.activator>
-        <bundle.export>com.ilyamur.osgi.topaz</bundle.export>
+
+        <bundle.Bundle-SymbolicName>com.ilyamur.osgi.topaz</bundle.Bundle-SymbolicName>
+        <bundle.Bundle-Activator>com.ilyamur.osgi.topaz.Activator</bundle.Bundle-Activator>
+        <bundle.Export-Package>com.ilyamur.osgi.topaz</bundle.Export-Package>
 
         <site.host>localhost</site.host>
         <site.port>8080</site.port>
@@ -26,31 +27,6 @@
 
     <build>
         <plugins>
-
-            <plugin>
-                <groupId>org.apache.sling</groupId>
-                <artifactId>maven-sling-plugin</artifactId>
-                <version>2.1.8</version>
-                <configuration>
-                    <slingUrl>${site.server}/system/console</slingUrl>
-                    <user>${site.user}</user>
-                    <password>${site.password}</password>
-                </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.felix</groupId>
-                <artifactId>maven-bundle-plugin</artifactId>
-                <version>2.5.4</version>
-                <extensions>true</extensions>
-                <configuration>
-                    <instructions>
-                        <Bundle-SymbolicName>${bundle.name}</Bundle-SymbolicName>
-                        <Bundle-Activator>${bundle.activator}</Bundle-Activator>
-                        <Export-Package>${bundle.export}</Export-Package>
-                    </instructions>
-                </configuration>
-            </plugin>
 
             <plugin>
                 <groupId>org.apache.felix</groupId>
@@ -69,6 +45,33 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>2.5.4</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>${bundle.Bundle-SymbolicName}</Bundle-SymbolicName>
+                        <Bundle-Activator>${bundle.Bundle-Activator}</Bundle-Activator>
+                        <Export-Package>${bundle.Export-Package}</Export-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.sling</groupId>
+                <artifactId>maven-sling-plugin</artifactId>
+                <version>2.1.8</version>
+                <configuration>
+                    <slingUrl>${site.server}/system/console</slingUrl>
+                    <user>${site.user}</user>
+                    <password>${site.password}</password>
+                    <bundleStartLevel>1</bundleStartLevel>
+                    <bundleStart>true</bundleStart>
+                </configuration>
             </plugin>
 
         </plugins>
@@ -94,10 +97,6 @@
                                 </goals>
                             </execution>
                         </executions>
-                        <configuration>
-                            <bundleStartLevel>1</bundleStartLevel>
-                            <bundleStart>true</bundleStart>
-                        </configuration>
                     </plugin>
                 </plugins>
             </build>
