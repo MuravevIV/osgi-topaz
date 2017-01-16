@@ -1,4 +1,4 @@
-package com.ilyamur.osgi.topaz;
+package com.ilyamur.osgi.topaz.service;
 
 public interface HelloService {
 
