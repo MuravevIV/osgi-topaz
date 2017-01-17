@@ -5,6 +5,7 @@ import com.ilyamur.osgi.topaz.service.HelloService;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Deactivate;
+import org.apache.felix.scr.annotations.Reference;
 
 import java.io.IOException;
 
@@ -15,14 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 @Component(immediate = true)
 public class HelloServlet extends OsgiHttpServlet {
 
-    private static final String PATTERN = "/osgi-topaz/hello";
-
-    private static final String NAME_PARAMETER = "name";
-    private static final String NAME_PARAMETER_DEFAULT = "anonymous";
+    @Reference
+    private HelloService helloService;
 
     @Activate
     public void activate() {
-        super.activate(PATTERN);
+        super.activate("/osgi-topaz/hello");
     }
 
     @Deactivate
@@ -32,11 +31,10 @@ public class HelloServlet extends OsgiHttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String name = request.getParameter(NAME_PARAMETER);
+        String name = request.getParameter("name");
         if (name == null) {
-            name = NAME_PARAMETER_DEFAULT;
+            name = "anonymous";
         }
-        HelloService helloService = getReference(HelloService.class);
         String greeting = helloService.getGreeting(name);
         response.getWriter().write(greeting);
     }
