@@ -1,7 +1,6 @@
 package com.ilyamur.osgi.topaz.service.impl;
 
 import com.ilyamur.osgi.topaz.service.HelloService;
-
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Property;
